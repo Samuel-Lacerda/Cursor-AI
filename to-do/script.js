@@ -134,6 +134,13 @@ class TodoApp {
   init() {
     this.loadTasks();
     this.setupEventListeners();
+    this.setupDragAndDrop();
+
+    // Configurar controles de janela após um pequeno delay para garantir que o DOM esteja pronto
+    setTimeout(() => {
+      this.setupWindowControls();
+    }, 100);
+
     this.renderTasks();
     this.updateStats();
     this.updateEmptyState();
@@ -576,6 +583,9 @@ class TodoApp {
     li.className = `task-item ${task.completed ? "completed" : ""}`;
     li.dataset.taskId = task.id;
 
+    // Adicionar atributo draggable
+    li.draggable = true;
+
     const difficultyText = this.getDifficultyText(task.difficulty);
     const difficultyClass = `difficulty-${task.difficulty}`;
 
@@ -601,6 +611,9 @@ class TodoApp {
                 }')" title="Excluir tarefa">
                     <i class="fas fa-trash"></i>
                 </button>
+            </div>
+            <div class="drag-handle" title="Arrastar para reordenar">
+                <i class="fas fa-grip-vertical"></i>
             </div>
         `;
 
@@ -924,6 +937,240 @@ class TodoApp {
       setTimeout(() => notification.remove(), 300);
     }, 3000);
   }
+
+  /**
+   * Configura os controles de janela personalizados para Electron
+   *
+   * @description Adiciona event listeners aos botões de minimizar, maximizar e fechar
+   * quando a aplicação está rodando no Electron
+   */
+  setupWindowControls() {
+    console.log("Configurando controles de janela...");
+    console.log("window.electronAPI:", window.electronAPI);
+
+    // Verificar se estamos no Electron
+    if (window.electronAPI) {
+      console.log("Electron detectado, configurando botões...");
+
+      const minimizeBtn = document.getElementById("minimizeBtn");
+      const maximizeBtn = document.getElementById("maximizeBtn");
+      const closeBtn = document.getElementById("closeBtn");
+
+      console.log("Botões encontrados:", {
+        minimizeBtn: !!minimizeBtn,
+        maximizeBtn: !!maximizeBtn,
+        closeBtn: !!closeBtn,
+      });
+
+      if (minimizeBtn) {
+        minimizeBtn.addEventListener("click", () => {
+          console.log("Botão minimizar clicado");
+          window.electronAPI.minimizeWindow();
+        });
+      }
+
+      if (maximizeBtn) {
+        maximizeBtn.addEventListener("click", () => {
+          console.log("Botão maximizar clicado");
+          window.electronAPI.maximizeWindow();
+        });
+      }
+
+      if (closeBtn) {
+        closeBtn.addEventListener("click", () => {
+          console.log("Botão fechar clicado");
+          window.electronAPI.closeWindow();
+        });
+      }
+    } else {
+      console.log(
+        "Electron não detectado, controles de janela não configurados"
+      );
+    }
+  }
+
+  /**
+   * Configura funcionalidade de drag and drop para reordenar tarefas
+   *
+   * @description Adiciona event listeners para permitir arrastar e soltar tarefas
+   * para reorganizar a ordem de exibição
+   */
+  setupDragAndDrop() {
+    // Event listener para quando uma tarefa começa a ser arrastada
+    document.addEventListener("dragstart", (e) => {
+      const taskItem = e.target.closest(".task-item");
+
+      if (taskItem) {
+        console.log("Drag start:", taskItem.dataset.taskId);
+        this.draggedTask = taskItem;
+        taskItem.classList.add("dragging");
+
+        // Definir dados de transferência
+        e.dataTransfer.effectAllowed = "move";
+        e.dataTransfer.setData("text/html", taskItem.outerHTML);
+
+        // Adicionar classe visual
+        setTimeout(() => {
+          taskItem.style.opacity = "0.5";
+        }, 0);
+      }
+    });
+
+    // Event listener para quando uma tarefa está sendo arrastada sobre outra
+    document.addEventListener("dragover", (e) => {
+      e.preventDefault();
+      e.dataTransfer.dropEffect = "move";
+
+      // Armazenar a posição do mouse para usar no drop
+      this.lastMouseY = e.clientY;
+
+      const taskItem = e.target.closest(".task-item");
+      if (taskItem && taskItem !== this.draggedTask) {
+        this.dragOverTask = taskItem;
+
+        // Adicionar indicador visual
+        const rect = taskItem.getBoundingClientRect();
+        const mouseY = e.clientY;
+        const taskCenter = rect.top + rect.height / 2;
+
+        // Remover classes anteriores
+        taskItem.classList.remove("drag-over-top", "drag-over-bottom");
+
+        // Adicionar classe baseada na posição do mouse
+        if (mouseY < taskCenter) {
+          taskItem.classList.add("drag-over-top");
+        } else {
+          taskItem.classList.add("drag-over-bottom");
+        }
+      }
+    });
+
+    // Event listener para quando uma tarefa é solta
+    document.addEventListener("drop", (e) => {
+      e.preventDefault();
+
+      console.log("Drop event triggered");
+
+      const taskItem = e.target.closest(".task-item");
+      if (taskItem && this.draggedTask && taskItem !== this.draggedTask) {
+        console.log("Reordering tasks:", {
+          dragged: this.draggedTask.dataset.taskId,
+          target: taskItem.dataset.taskId,
+        });
+        this.reorderTasks(this.draggedTask, taskItem);
+      } else {
+        console.log("Drop conditions not met:", {
+          hasTaskItem: !!taskItem,
+          hasDraggedTask: !!this.draggedTask,
+          isDifferent: taskItem !== this.draggedTask,
+        });
+      }
+
+      this.clearDragState();
+    });
+
+    // Event listener para quando o drag é cancelado
+    document.addEventListener("dragend", (e) => {
+      console.log("Drag end");
+      this.clearDragState();
+    });
+  }
+
+  /**
+   * Limpa o estado de drag and drop
+   *
+   * @description Remove classes visuais e reseta variáveis de estado
+   */
+  clearDragState() {
+    if (this.draggedTask) {
+      this.draggedTask.classList.remove("dragging");
+      this.draggedTask.style.opacity = "";
+      this.draggedTask = null;
+    }
+
+    if (this.dragOverTask) {
+      this.dragOverTask.classList.remove("drag-over-top", "drag-over-bottom");
+      this.dragOverTask = null;
+    }
+
+    // Limpar todas as classes de drag
+    document.querySelectorAll(".task-item").forEach((item) => {
+      item.classList.remove("dragging", "drag-over-top", "drag-over-bottom");
+      item.style.opacity = "";
+    });
+  }
+
+  /**
+   * Reordena as tarefas baseado no drag and drop
+   *
+   * @param {HTMLElement} draggedElement - Elemento que está sendo arrastado
+   * @param {HTMLElement} targetElement - Elemento onde foi solto
+   * @description Reorganiza o array de tarefas e atualiza a interface
+   */
+  reorderTasks(draggedElement, targetElement) {
+    const draggedTaskId = draggedElement.dataset.taskId;
+    const targetTaskId = targetElement.dataset.taskId;
+
+    console.log("Reordenando:", { draggedTaskId, targetTaskId });
+
+    // Encontrar índices das tarefas no array original
+    const draggedIndex = this.tasks.findIndex(
+      (task) => task.id === draggedTaskId
+    );
+    const targetIndex = this.tasks.findIndex(
+      (task) => task.id === targetTaskId
+    );
+
+    if (draggedIndex === -1 || targetIndex === -1) {
+      console.log("Tarefa não encontrada:", { draggedTaskId, targetTaskId });
+      return;
+    }
+
+    // Obter a posição do mouse em relação ao elemento alvo
+    const rect = targetElement.getBoundingClientRect();
+    const mouseY = this.lastMouseY || rect.top + rect.height / 2;
+    const targetCenter = rect.top + rect.height / 2;
+
+    // Determinar se deve inserir antes ou depois do elemento alvo
+    let newIndex;
+    if (mouseY < targetCenter) {
+      // Inserir antes do elemento alvo
+      newIndex = targetIndex;
+    } else {
+      // Inserir depois do elemento alvo
+      newIndex = targetIndex + 1;
+    }
+
+    // Ajustar índice se a tarefa arrastada está sendo movida para baixo
+    if (draggedIndex < newIndex) {
+      newIndex--;
+    }
+
+    // Verificar se a nova posição é diferente da atual
+    if (draggedIndex === newIndex) {
+      console.log("Mesma posição, não há necessidade de reordenar");
+      return;
+    }
+
+    console.log("Reordenando tarefa:", {
+      draggedIndex,
+      targetIndex,
+      newIndex,
+      draggedTaskId,
+      targetTaskId,
+    });
+
+    // Reordenar array
+    const [draggedTask] = this.tasks.splice(draggedIndex, 1);
+    this.tasks.splice(newIndex, 0, draggedTask);
+
+    // Salvar e re-renderizar
+    this.saveTasks();
+    this.renderTasks();
+    this.updateStats();
+
+    this.showNotification("Ordem das tarefas atualizada!", "success");
+  }
 }
 
 // Adicionar estilos CSS para animações de notificação
@@ -953,8 +1200,10 @@ notificationStyles.textContent = `
 `;
 document.head.appendChild(notificationStyles);
 
-// Inicializar a aplicação
-const todoApp = new TodoApp();
+// Inicializar a aplicação quando o DOM estiver pronto
+document.addEventListener("DOMContentLoaded", () => {
+  const todoApp = new TodoApp();
 
-// Expor para uso global (para os onclick nos elementos HTML)
-window.todoApp = todoApp;
+  // Expor para uso global (para os onclick nos elementos HTML)
+  window.todoApp = todoApp;
+});

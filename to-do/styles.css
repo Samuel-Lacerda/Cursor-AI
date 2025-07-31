@@ -5,6 +5,318 @@
   box-sizing: border-box;
 }
 
+/* Controles de janela personalizados para Electron */
+.window-controls {
+  position: fixed;
+  top: 0;
+  right: 0;
+  z-index: 10000;
+  display: flex;
+  background: rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(10px);
+  border-radius: 0 0 0 10px;
+  padding: 5px;
+}
+
+.window-control {
+  width: 30px;
+  height: 30px;
+  border: none;
+  background: transparent;
+  color: #ffffff;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+  margin-left: 2px;
+}
+
+.window-control:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.window-control.minimize-btn:hover {
+  background: rgba(255, 193, 7, 0.3);
+}
+
+.window-control.maximize-btn:hover {
+  background: rgba(76, 175, 80, 0.3);
+}
+
+.window-control.close-btn:hover {
+  background: rgba(244, 67, 54, 0.3);
+}
+
+.window-control i {
+  font-size: 12px;
+}
+
+/* Esconder controles em modo web */
+@media (max-width: 768px) {
+  .window-controls {
+    display: none;
+  }
+}
+
+/* Estilização personalizada da barra de rolagem para Electron */
+::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(14, 165, 233, 0.1);
+  border-radius: 6px;
+  margin: 2px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, #0ea5e9 0%, #0891b2 50%, #0e7490 100%);
+  border-radius: 6px;
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.3s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(135deg, #0891b2 0%, #0e7490 50%, #155e75 100%);
+  transform: scale(1.05);
+}
+
+::-webkit-scrollbar-thumb:active {
+  background: linear-gradient(135deg, #0e7490 0%, #155e75 50%, #164e63 100%);
+}
+
+::-webkit-scrollbar-corner {
+  background: rgba(14, 165, 233, 0.1);
+}
+
+/* Estilização específica para elementos com scroll */
+.tasks-container::-webkit-scrollbar {
+  width: 8px;
+}
+
+.tasks-container::-webkit-scrollbar-track {
+  background: rgba(14, 165, 233, 0.05);
+  border-radius: 4px;
+}
+
+.tasks-container::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, #0ea5e9 0%, #0891b2 100%);
+  border-radius: 4px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.tasks-container::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(135deg, #0891b2 0%, #0e7490 100%);
+}
+
+/* Estilização para elementos de filtro com scroll */
+.filters::-webkit-scrollbar {
+  width: 6px;
+}
+
+.filters::-webkit-scrollbar-track {
+  background: rgba(14, 165, 233, 0.05);
+  border-radius: 3px;
+}
+
+.filters::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, #0ea5e9 0%, #0891b2 100%);
+  border-radius: 3px;
+}
+
+/* Estilização para dropdown de dificuldade */
+.difficulty-dropdown-content::-webkit-scrollbar {
+  width: 6px;
+}
+
+.difficulty-dropdown-content::-webkit-scrollbar-track {
+  background: rgba(14, 165, 233, 0.05);
+  border-radius: 3px;
+}
+
+.difficulty-dropdown-content::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, #0ea5e9 0%, #0891b2 100%);
+  border-radius: 3px;
+}
+
+/* Estilização para modais */
+.modal-content::-webkit-scrollbar {
+  width: 8px;
+}
+
+.modal-content::-webkit-scrollbar-track {
+  background: rgba(14, 165, 233, 0.05);
+  border-radius: 4px;
+}
+
+.modal-content::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, #0ea5e9 0%, #0891b2 100%);
+  border-radius: 4px;
+}
+
+/* Estilização para elementos de input com scroll */
+input::-webkit-scrollbar,
+textarea::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+input::-webkit-scrollbar-track,
+textarea::-webkit-scrollbar-track {
+  background: rgba(14, 165, 233, 0.05);
+  border-radius: 3px;
+}
+
+input::-webkit-scrollbar-thumb,
+textarea::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, #0ea5e9 0%, #0891b2 100%);
+  border-radius: 3px;
+}
+
+/* Animações suaves para o scroll */
+* {
+  scroll-behavior: smooth;
+}
+
+/* Estilização para Firefox (fallback) */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #0ea5e9 rgba(14, 165, 233, 0.1);
+}
+
+/* Estilos para Drag and Drop */
+.task-item {
+  cursor: grab;
+  transition: all 0.3s ease;
+  user-select: none;
+}
+
+.task-item:active {
+  cursor: grabbing;
+}
+
+.task-item.dragging {
+  opacity: 0.5;
+  transform: rotate(2deg);
+  box-shadow: 0 10px 30px rgba(14, 165, 233, 0.3);
+  z-index: 1000;
+  position: relative;
+}
+
+.task-item.drag-over-top {
+  border-top: 3px solid #0ea5e9;
+  margin-top: 10px;
+  background: linear-gradient(
+    135deg,
+    rgba(14, 165, 233, 0.1) 0%,
+    transparent 100%
+  );
+}
+
+.task-item.drag-over-bottom {
+  border-bottom: 3px solid #0ea5e9;
+  margin-bottom: 10px;
+  background: linear-gradient(
+    135deg,
+    transparent 0%,
+    rgba(14, 165, 233, 0.1) 100%
+  );
+}
+
+/* Indicador visual de área de drop */
+.tasks-list {
+  min-height: 50px;
+  position: relative;
+}
+
+.tasks-list::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(14, 165, 233, 0.05) 0%,
+    transparent 50%,
+    rgba(14, 165, 233, 0.05) 100%
+  );
+  border: 2px dashed rgba(14, 165, 233, 0.3);
+  border-radius: 10px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.tasks-list.drag-over::before {
+  opacity: 1;
+}
+
+/* Feedback visual durante o drag */
+.task-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(14, 165, 233, 0.2);
+}
+
+.task-item.dragging:hover {
+  transform: none;
+}
+
+/* Prevenir seleção de texto durante drag */
+.task-item.dragging * {
+  pointer-events: none;
+}
+
+/* Estilo para área de drop vazia */
+.empty-state.drag-over {
+  border: 2px dashed #0ea5e9;
+  background: linear-gradient(
+    135deg,
+    rgba(14, 165, 233, 0.1) 0%,
+    rgba(14, 165, 233, 0.05) 100%
+  );
+}
+
+/* Handle de arrastar */
+.drag-handle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  color: rgba(14, 165, 233, 0.6);
+  cursor: grab;
+  transition: all 0.3s ease;
+  border-radius: 4px;
+  margin-left: 10px;
+}
+
+.drag-handle:hover {
+  color: #0ea5e9;
+  background: rgba(14, 165, 233, 0.1);
+  transform: scale(1.1);
+}
+
+.drag-handle:active {
+  cursor: grabbing;
+  transform: scale(0.95);
+}
+
+.drag-handle i {
+  font-size: 14px;
+}
+
+/* Esconder handle em dispositivos móveis */
+@media (max-width: 768px) {
+  .drag-handle {
+    display: none;
+  }
+}
+
 body {
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   background: linear-gradient(135deg, #0ea5e9 0%, #0891b2 50%, #0e7490 100%);
@@ -1663,25 +1975,6 @@ body {
 .clear-btn:focus {
   outline: 2px solid #0ea5e9;
   outline-offset: 2px;
-}
-
-/* Scrollbar personalizada */
-.tasks-container::-webkit-scrollbar {
-  width: 8px;
-}
-
-.tasks-container::-webkit-scrollbar-track {
-  background: #f1f1f1;
-  border-radius: 4px;
-}
-
-.tasks-container::-webkit-scrollbar-thumb {
-  background: #0ea5e9;
-  border-radius: 4px;
-}
-
-.tasks-container::-webkit-scrollbar-thumb:hover {
-  background: #0891b2;
 }
 
 /* Modais */

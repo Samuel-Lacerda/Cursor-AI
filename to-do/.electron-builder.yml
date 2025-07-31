@@ -1,0 +1,74 @@
+# Configurações do Electron Builder
+# Arquivo de configuração adicional para personalizar o build
+
+directories:
+  output: dist
+  buildResources: assets
+
+files:
+  - "main.js"
+  - "preload.js"
+  - "index.html"
+  - "styles.css"
+  - "script.js"
+  - "assets/**/*"
+
+win:
+  target:
+    - target: nsis
+      arch:
+        - x64
+        - ia32
+  icon: assets/icon.ico
+  artifactName: "${productName}-${version}-${arch}.${ext}"
+  publisherName: "Seu Nome"
+  verifyUpdateCodeSignature: false
+
+mac:
+  target:
+    - target: dmg
+      arch:
+        - x64
+        - arm64
+  icon: assets/icon.icns
+  category: public.app-category.productivity
+  artifactName: "${productName}-${version}-${arch}.${ext}"
+  hardenedRuntime: true
+  gatekeeperAssess: false
+
+linux:
+  target:
+    - target: AppImage
+      arch:
+        - x64
+        - armv7l
+        - arm64
+  icon: assets/icon.png
+  category: Utility
+  artifactName: "${productName}-${version}-${arch}.${ext}"
+
+nsis:
+  oneClick: false
+  allowToChangeInstallationDirectory: true
+  createDesktopShortcut: true
+  createStartMenuShortcut: true
+  shortcutName: "To-Do List"
+
+dmg:
+  title: "To-Do List"
+  icon: assets/icon.icns
+  background: assets/dmg-background.png
+  window:
+    width: 540
+    height: 380
+  contents:
+    - x: 130
+      y: 220
+    - x: 410
+      y: 220
+      type: link
+      path: /Applications
+
+appImage:
+  artifactName: "${productName}-${version}-${arch}.${ext}"
+  category: Utility

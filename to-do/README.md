@@ -1,179 +1,179 @@
-# 📝 To-Do List - Aplicação Completa
+# To-Do List - Aplicação Electron
 
-Uma aplicação moderna e responsiva de gerenciamento de tarefas desenvolvida com HTML, CSS e JavaScript puro.
+Uma aplicação moderna e elegante para gerenciamento de tarefas, desenvolvida com Electron para funcionar como aplicação desktop nativa.
 
-## ✨ Funcionalidades
+## 🚀 Funcionalidades
 
-### 🎯 Funcionalidades Principais
-
-- **Adicionar Tarefas**: Interface intuitiva para adicionar novas tarefas
-- **Marcar como Concluída**: Clique no checkbox para marcar/desmarcar tarefas
-- **Editar Tarefas**: Edição inline com duplo clique ou botão de editar
-- **Excluir Tarefas**: Remoção individual de tarefas
-- **Filtros**: Visualizar todas, pendentes ou concluídas
-- **Estatísticas**: Contador de total, pendentes e concluídas
-- **Persistência**: Dados salvos no localStorage do navegador
-
-### 🎨 Interface Moderna
-
-- **Design Responsivo**: Funciona perfeitamente em desktop, tablet e mobile
-- **Gradientes e Animações**: Interface visualmente atrativa
-- **Ícones Font Awesome**: Ícones intuitivos para melhor UX
-- **Notificações**: Feedback visual para todas as ações
-- **Estado Vazio**: Mensagem amigável quando não há tarefas
-
-### 🔧 Funcionalidades Avançadas
-
-- **Validação de Input**: Previne tarefas vazias
-- **Escape HTML**: Proteção contra XSS
-- **Confirmações**: Diálogos de confirmação para ações destrutivas
-- **Acessibilidade**: Suporte a navegação por teclado
-- **Performance**: Renderização otimizada
-
-## 🚀 Como Usar
-
-### Instalação
-
-1. Clone ou baixe os arquivos do projeto
-2. Abra o arquivo `index.html` em qualquer navegador moderno
-3. Comece a usar imediatamente!
-
-### Uso Básico
-
-1. **Adicionar Tarefa**: Digite no campo de texto e pressione Enter ou clique em "Adicionar"
-2. **Marcar como Concluída**: Clique no círculo ao lado da tarefa
-3. **Editar**: Clique no botão de editar (ícone de lápis)
-4. **Excluir**: Clique no botão de excluir (ícone de lixeira)
-5. **Filtrar**: Use os botões "Todas", "Pendentes" ou "Concluídas"
-
-### Funcionalidades Avançadas
-
-- **Limpar Concluídas**: Remove todas as tarefas marcadas como concluídas
-- **Limpar Todas**: Remove todas as tarefas (com confirmação)
-- **Atalhos de Teclado**:
-  - `Enter`: Adicionar tarefa
-  - `Enter`: Salvar edição
-  - `Escape`: Cancelar edição
-
-## 📁 Estrutura do Projeto
-
-```
-to-do/
-├── index.html          # Estrutura HTML principal
-├── styles.css          # Estilos CSS responsivos
-├── script.js           # Lógica JavaScript completa
-└── README.md           # Documentação do projeto
-```
+- **Interface Moderna**: Design responsivo e intuitivo
+- **Gerenciamento de Tarefas**: Adicionar, editar, excluir e marcar tarefas como concluídas
+- **Sistema de Dificuldade**: Classificar tarefas por nível de dificuldade (Fácil, Médio, Difícil)
+- **Filtros Avançados**: Filtrar por status e dificuldade
+- **Pesquisa em Tempo Real**: Buscar tarefas instantaneamente
+- **Estatísticas**: Visualizar total, pendentes e concluídas
+- **Persistência de Dados**: Salvar automaticamente no localStorage
+- **Modo Desktop**: Funcionalidades específicas do Electron
+  - Menu nativo do sistema
+  - Atalhos de teclado
+  - Importar/Exportar dados
+  - Salvar em arquivos JSON
 
 ## 🛠️ Tecnologias Utilizadas
 
-- **HTML5**: Estrutura semântica e acessível
-- **CSS3**:
-  - Flexbox e Grid para layout
-  - Gradientes e animações
-  - Media queries para responsividade
-  - Variáveis CSS para consistência
-- **JavaScript ES6+**:
-  - Classes e métodos modernos
-  - localStorage para persistência
-  - Event listeners e manipulação DOM
-  - Programação orientada a objetos
+- **Electron**: Framework para aplicações desktop
+- **HTML5**: Estrutura da aplicação
+- **CSS3**: Estilização moderna com animações
+- **JavaScript ES6+**: Lógica da aplicação
+- **Font Awesome**: Ícones
 
-## 🎨 Características do Design
+## 📦 Instalação e Execução
 
-### Paleta de Cores
+### Pré-requisitos
 
-- **Primária**: Gradiente azul ciano/teal (#0ea5e9 → #0891b2 → #0e7490)
-- **Acentos**: Branco (#ffffff) para ícones e decorações
-- **Sucesso**: Azul ciano (#0ea5e9) para elementos concluídos
-- **Erro**: Vermelho (#f44336)
-- **Aviso**: Laranja (#ff9800)
-- **Info**: Azul (#2196F3)
+- Node.js (versão 14 ou superior)
+- npm ou yarn
 
-### Responsividade
+### Passos para Instalação
 
-- **Desktop**: Layout completo com todas as funcionalidades
-- **Tablet**: Adaptação para telas médias
-- **Mobile**: Layout otimizado para telas pequenas
+1. **Clone o repositório**
 
-## 🔧 Funcionalidades Técnicas
+   ```bash
+   git clone https://github.com/seu-usuario/todo-electron-app.git
+   cd todo-electron-app
+   ```
 
-### Classe Task
+2. **Instale as dependências**
+
+   ```bash
+   npm install
+   ```
+
+3. **Execute a aplicação**
+
+   ```bash
+   # Modo desenvolvimento (com DevTools)
+   npm run dev
+
+   # Modo produção
+   npm start
+   ```
+
+## 🏗️ Scripts Disponíveis
+
+- `npm start`: Executa a aplicação em modo produção
+- `npm run dev`: Executa a aplicação em modo desenvolvimento
+- `npm run build`: Gera executável da aplicação
+- `npm run pack`: Empacota a aplicação para distribuição
+- `npm run dist`: Cria instalador da aplicação
+
+## 📱 Funcionalidades do Electron
+
+### Menu Nativo
+
+- **Arquivo**: Nova Tarefa (Ctrl+N), Salvar Dados (Ctrl+S), Sobre, Sair
+- **Editar**: Desfazer, Refazer, Recortar, Copiar, Colar, Selecionar Tudo
+- **Visualizar**: Recarregar, Ferramentas de Desenvolvedor, Zoom, Tela Cheia
+- **Ajuda**: Documentação, Reportar Bug
+
+### Atalhos de Teclado
+
+- `Ctrl+N`: Nova tarefa
+- `Ctrl+S`: Salvar dados
+- `Ctrl+Q`: Sair da aplicação
+- `F11`: Tela cheia
+- `F12`: Ferramentas de desenvolvedor
+
+### Operações de Arquivo
+
+- **Exportar Dados**: Salvar todas as tarefas em arquivo JSON
+- **Importar Dados**: Carregar tarefas de arquivo JSON
+- **Backup Automático**: Dados salvos automaticamente no localStorage
+
+## 🎨 Interface
+
+A aplicação possui uma interface moderna com:
+
+- **Gradientes**: Design com gradientes azuis modernos
+- **Animações**: Transições suaves e animações CSS
+- **Responsividade**: Adaptável a diferentes tamanhos de tela
+- **Modo Escuro**: Suporte a temas (em desenvolvimento)
+- **Ícones**: Font Awesome para melhor experiência visual
+
+## 📊 Estrutura do Projeto
+
+```
+todo-electron-app/
+├── main.js              # Processo principal do Electron
+├── preload.js           # Ponte segura entre processos
+├── index.html           # Interface principal
+├── styles.css           # Estilos da aplicação
+├── script.js            # Lógica da aplicação
+├── package.json         # Configurações do projeto
+├── assets/              # Ícones e recursos
+└── README.md           # Documentação
+```
+
+## 🔧 Desenvolvimento
+
+### Estrutura de Classes
+
+#### Task
 
 ```javascript
 /**
  * Representa uma tarefa individual
  * @param {string} text - Texto da tarefa
+ * @param {string} difficulty - Nível de dificuldade
  * @param {boolean} completed - Status de conclusão
- * @param {string} id - ID único (gerado automaticamente)
- * @param {Date} createdAt - Data de criação
  */
 ```
 
-### Classe TodoApp
+#### TodoApp
 
 ```javascript
 /**
- * Gerencia toda a aplicação de To-Do List
- * Responsável por todas as operações CRUD
- * Gerencia localStorage e interface
+ * Classe principal que gerencia toda a aplicação
+ * Responsável por: renderização, persistência, filtros, etc.
  */
 ```
 
-### Métodos Principais
+### Funcionalidades Principais
 
-- `addTask()`: Adiciona nova tarefa
-- `deleteTask(id)`: Remove tarefa específica
-- `toggleTask(id)`: Alterna status de conclusão
-- `editTask(id)`: Permite edição inline
-- `setFilter(filter)`: Filtra tarefas por status
-- `saveTasks()`: Persiste dados no localStorage
-- `loadTasks()`: Carrega dados do localStorage
+1. **Gerenciamento de Estado**: Controle centralizado do estado da aplicação
+2. **Persistência**: Salvamento automático no localStorage
+3. **Filtros**: Sistema de filtros por status e dificuldade
+4. **Pesquisa**: Busca em tempo real
+5. **Notificações**: Sistema de notificações visuais
+6. **Integração Electron**: Funcionalidades específicas do desktop
 
-## 📱 Compatibilidade
+## 🚀 Build e Distribuição
 
-### Navegadores Suportados
+### Gerar Executável
 
-- ✅ Chrome 60+
-- ✅ Firefox 55+
-- ✅ Safari 12+
-- ✅ Edge 79+
+```bash
+# Para Windows
+npm run build -- --win
 
-### Dispositivos
+# Para macOS
+npm run build -- --mac
 
-- ✅ Desktop (Windows, macOS, Linux)
-- ✅ Tablet (iOS, Android)
-- ✅ Mobile (iOS, Android)
+# Para Linux
+npm run build -- --linux
+```
 
-## 🚀 Melhorias Futuras
+### Configurações de Build
 
-### Funcionalidades Planejadas
+O arquivo `package.json` contém configurações para:
 
-- [ ] Categorias para tarefas
-- [ ] Data de vencimento
-- [ ] Prioridades (Alta, Média, Baixa)
-- [ ] Exportar/Importar dados
-- [ ] Temas claro/escuro
-- [ ] Sincronização com nuvem
-- [ ] Notificações push
-- [ ] Modo offline
-
-### Melhorias Técnicas
-
-- [ ] Service Workers para PWA
-- [ ] IndexedDB para mais dados
-- [ ] Compressão de dados
-- [ ] Backup automático
-- [ ] Histórico de ações
+- **Windows**: Instalador NSIS
+- **macOS**: DMG
+- **Linux**: AppImage
 
 ## 🤝 Contribuição
 
-Sinta-se à vontade para contribuir com o projeto:
-
-1. Faça um fork do repositório
-2. Crie uma branch para sua feature (`git checkout -b feature/nova-funcionalidade`)
-3. Commit suas mudanças (`git commit -am 'Adiciona nova funcionalidade'`)
-4. Push para a branch (`git push origin feature/nova-funcionalidade`)
+1. Fork o projeto
+2. Crie uma branch para sua feature (`git checkout -b feature/AmazingFeature`)
+3. Commit suas mudanças (`git commit -m 'Add some AmazingFeature'`)
+4. Push para a branch (`git push origin feature/AmazingFeature`)
 5. Abra um Pull Request
 
 ## 📄 Licença
@@ -182,8 +182,16 @@ Este projeto está sob a licença MIT. Veja o arquivo `LICENSE` para mais detalh
 
 ## 👨‍💻 Autor
 
-Desenvolvido com ❤️ para demonstrar habilidades em desenvolvimento web front-end.
+**Seu Nome**
+
+- GitHub: [@seu-usuario](https://github.com/seu-usuario)
+
+## 🙏 Agradecimentos
+
+- Electron team pela excelente framework
+- Font Awesome pelos ícones
+- Comunidade open source
 
 ---
 
-**⭐ Se este projeto foi útil para você, considere dar uma estrela!**
+**Desenvolvido com ❤️ usando Electron**
