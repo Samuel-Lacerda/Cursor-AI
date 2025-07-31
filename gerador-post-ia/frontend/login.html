@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login - Gerador de Artigos WordPress com IA</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        min-height: 100vh;
+      }
+      .login-container {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+      }
+      .login-card {
+        background: white;
+        border-radius: 15px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        overflow: hidden;
+      }
+      .login-header {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 2rem;
+        text-align: center;
+      }
+      .form-control:focus {
+        border-color: #667eea;
+        box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+      }
+      .btn-gradient {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        border: none;
+        color: white;
+      }
+      .btn-gradient:hover {
+        background: linear-gradient(135deg, #5a6fd8 0%, #6a4190 100%);
+        color: white;
+      }
+      .alert {
+        border-radius: 10px;
+      }
+      .input-group-text {
+        background: #f8f9fa;
+        border-right: none;
+      }
+      .form-control {
+        border-left: none;
+      }
+      .form-control:focus + .input-group-text {
+        border-color: #667eea;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="login-container">
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-md-6 col-lg-5">
+            <div class="login-card">
+              <div class="login-header">
+                <h2 class="mb-2">
+                  <i class="fas fa-robot me-2"></i>
+                  Gerador IA
+                </h2>
+                <p class="mb-0">Faça login para acessar o sistema</p>
+              </div>
+
+              <div class="p-4">
+                <!-- Alert para mensagens -->
+                <div id="alert-container"></div>
+
+                <!-- Formulário de Login -->
+                <form id="loginForm">
+                  <div class="mb-3">
+                    <label for="username" class="form-label"
+                      >Usuário ou Email</label
+                    >
+                    <div class="input-group">
+                      <span class="input-group-text">
+                        <i class="fas fa-user"></i>
+                      </span>
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="username"
+                        name="username"
+                        required
+                      />
+                    </div>
+                  </div>
+
+                  <div class="mb-3">
+                    <label for="password" class="form-label">Senha</label>
+                    <div class="input-group">
+                      <span class="input-group-text">
+                        <i class="fas fa-lock"></i>
+                      </span>
+                      <input
+                        type="password"
+                        class="form-control"
+                        id="password"
+                        name="password"
+                        required
+                      />
+                    </div>
+                  </div>
+
+                  <div class="mb-3 form-check">
+                    <input
+                      type="checkbox"
+                      class="form-check-input"
+                      id="rememberMe"
+                    />
+                    <label class="form-check-label" for="rememberMe">
+                      Lembrar de mim
+                    </label>
+                  </div>
+
+                  <button
+                    type="submit"
+                    class="btn btn-gradient w-100 mb-3"
+                    id="loginBtn"
+                  >
+                    <i class="fas fa-sign-in-alt me-2"></i>
+                    Entrar
+                  </button>
+                </form>
+
+                <hr class="my-4" />
+
+                <!-- Formulário de Registro -->
+                <div class="text-center mb-3">
+                  <h6 class="text-muted">Não tem uma conta?</h6>
+                </div>
+
+                <form id="registerForm">
+                  <div class="mb-3">
+                    <label for="regUsername" class="form-label"
+                      >Nome de Usuário</label
+                    >
+                    <div class="input-group">
+                      <span class="input-group-text">
+                        <i class="fas fa-user"></i>
+                      </span>
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="regUsername"
+                        name="username"
+                        required
+                      />
+                    </div>
+                  </div>
+
+                  <div class="mb-3">
+                    <label for="regEmail" class="form-label">Email</label>
+                    <div class="input-group">
+                      <span class="input-group-text">
+                        <i class="fas fa-envelope"></i>
+                      </span>
+                      <input
+                        type="email"
+                        class="form-control"
+                        id="regEmail"
+                        name="email"
+                        required
+                      />
+                    </div>
+                  </div>
+
+                  <div class="mb-3">
+                    <label for="regPassword" class="form-label">Senha</label>
+                    <div class="input-group">
+                      <span class="input-group-text">
+                        <i class="fas fa-lock"></i>
+                      </span>
+                      <input
+                        type="password"
+                        class="form-control"
+                        id="regPassword"
+                        name="password"
+                        required
+                      />
+                    </div>
+                  </div>
+
+                  <button
+                    type="submit"
+                    class="btn btn-outline-primary w-100"
+                    id="registerBtn"
+                  >
+                    <i class="fas fa-user-plus me-2"></i>
+                    Criar Conta
+                  </button>
+                </form>
+
+                <div class="text-center mt-4">
+                  <a href="index.html" class="text-muted">
+                    <i class="fas fa-arrow-left me-1"></i>
+                    Voltar ao início
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+      // Configuração da API
+      const API_BASE_URL = "http://localhost:8000";
+
+      // Elementos do DOM
+      const loginForm = document.getElementById("loginForm");
+      const registerForm = document.getElementById("registerForm");
+      const alertContainer = document.getElementById("alertContainer");
+
+      // Função para mostrar alertas
+      function showAlert(message, type = "info") {
+        alertContainer.innerHTML = `
+                <div class="alert alert-${type} alert-dismissible fade show" role="alert">
+                    ${message}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+            `;
+      }
+
+      // Função para fazer login
+      async function login(username, password) {
+        try {
+          const response = await fetch(`${API_BASE_URL}/login`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ username, password }),
+          });
+
+          if (response.ok) {
+            const data = await response.json();
+
+            // Salva o token
+            localStorage.setItem("token", data.access_token);
+            localStorage.setItem("username", username);
+
+            showAlert("Login realizado com sucesso!", "success");
+
+            // Redireciona para o dashboard após 1 segundo
+            setTimeout(() => {
+              window.location.href = "dashboard.html";
+            }, 1000);
+          } else {
+            const error = await response.json();
+            showAlert(error.detail || "Erro no login", "danger");
+          }
+        } catch (error) {
+          showAlert(
+            "Erro de conexão. Verifique se o backend está rodando.",
+            "danger"
+          );
+        }
+      }
+
+      // Função para registrar usuário
+      async function register(username, email, password) {
+        try {
+          const response = await fetch(`${API_BASE_URL}/register`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ username, email, password }),
+          });
+
+          if (response.ok) {
+            showAlert(
+              "Conta criada com sucesso! Faça login para continuar.",
+              "success"
+            );
+
+            // Limpa o formulário de registro
+            registerForm.reset();
+          } else {
+            const error = await response.json();
+            showAlert(error.detail || "Erro no registro", "danger");
+          }
+        } catch (error) {
+          showAlert(
+            "Erro de conexão. Verifique se o backend está rodando.",
+            "danger"
+          );
+        }
+      }
+
+      // Event listener para login
+      loginForm.addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        const username = document.getElementById("username").value;
+        const password = document.getElementById("password").value;
+
+        if (!username || !password) {
+          showAlert("Preencha todos os campos", "warning");
+          return;
+        }
+
+        const loginBtn = document.getElementById("loginBtn");
+        loginBtn.disabled = true;
+        loginBtn.innerHTML =
+          '<i class="fas fa-spinner fa-spin me-2"></i>Entrando...';
+
+        await login(username, password);
+
+        loginBtn.disabled = false;
+        loginBtn.innerHTML = '<i class="fas fa-sign-in-alt me-2"></i>Entrar';
+      });
+
+      // Event listener para registro
+      registerForm.addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        const username = document.getElementById("regUsername").value;
+        const email = document.getElementById("regEmail").value;
+        const password = document.getElementById("regPassword").value;
+
+        if (!username || !email || !password) {
+          showAlert("Preencha todos os campos", "warning");
+          return;
+        }
+
+        if (password.length < 6) {
+          showAlert("A senha deve ter pelo menos 6 caracteres", "warning");
+          return;
+        }
+
+        const registerBtn = document.getElementById("registerBtn");
+        registerBtn.disabled = true;
+        registerBtn.innerHTML =
+          '<i class="fas fa-spinner fa-spin me-2"></i>Criando...';
+
+        await register(username, email, password);
+
+        registerBtn.disabled = false;
+        registerBtn.innerHTML =
+          '<i class="fas fa-user-plus me-2"></i>Criar Conta';
+      });
+
+      // Verifica se já está logado
+      window.addEventListener("load", () => {
+        const token = localStorage.getItem("token");
+        if (token) {
+          window.location.href = "dashboard.html";
+        }
+      });
+    </script>
+  </body>
+</html>

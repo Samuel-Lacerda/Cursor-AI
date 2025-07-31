@@ -494,13 +494,25 @@ class TodoApp {
   showDifficultyDropdown(taskId, taskElement) {
     this.currentEditingTaskId = taskId;
 
-    // Posicionar o dropdown próximo ao elemento clicado
-    const rect = taskElement.getBoundingClientRect();
     const dropdown = difficultyDropdown;
+    const isMobile = window.innerWidth <= 768;
 
-    dropdown.style.position = "absolute";
-    dropdown.style.top = `${rect.bottom + window.scrollY}px`;
-    dropdown.style.left = `${rect.right - 250}px`; // Alinhar à direita
+    if (isMobile) {
+      // No mobile, centralizar na tela
+      dropdown.style.position = "fixed";
+      dropdown.style.top = "50%";
+      dropdown.style.left = "50%";
+      dropdown.style.transform = "translate(-50%, -50%)";
+      dropdown.style.zIndex = "2000";
+    } else {
+      // No desktop, posicionar próximo ao elemento
+      const rect = taskElement.getBoundingClientRect();
+      dropdown.style.position = "absolute";
+      dropdown.style.top = `${rect.bottom + window.scrollY}px`;
+      dropdown.style.left = `${rect.right - 250}px`;
+      dropdown.style.transform = "none";
+      dropdown.style.zIndex = "1000";
+    }
 
     dropdown.classList.add("show");
   }
