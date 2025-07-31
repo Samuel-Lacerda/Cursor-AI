@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>To-Do List - Organize suas tarefas</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <header class="header">
+        <div class="header-content">
+          <div class="logo-section">
+            <div class="logo-icon">
+              <i class="fas fa-check-circle"></i>
+            </div>
+            <div class="title-group">
+              <h1 class="title">To-Do List</h1>
+              <div class="title-decoration">
+                <span class="decoration-line"></span>
+                <span class="decoration-dot"></span>
+                <span class="decoration-line"></span>
+              </div>
+            </div>
+          </div>
+          <p class="subtitle">
+            Organize suas tarefas de forma simples e eficiente
+          </p>
+          <div class="header-stats">
+            <div class="stat-badge">
+              <i class="fas fa-tasks"></i>
+              <span>Produtividade</span>
+            </div>
+            <div class="stat-badge">
+              <i class="fas fa-clock"></i>
+              <span>Organização</span>
+            </div>
+            <div class="stat-badge">
+              <i class="fas fa-star"></i>
+              <span>Eficiência</span>
+            </div>
+          </div>
+        </div>
+        <div class="header-background">
+          <div class="floating-shape shape-1"></div>
+          <div class="floating-shape shape-2"></div>
+          <div class="floating-shape shape-3"></div>
+        </div>
+      </header>
+
+      <main class="main-content">
+        <div class="input-section">
+          <div class="input-group">
+            <input
+              type="text"
+              id="taskInput"
+              placeholder="Digite sua tarefa aqui..."
+              class="task-input"
+            />
+            <div class="difficulty-selector">
+              <label for="difficultySelect">Dificuldade:</label>
+              <select id="difficultySelect" class="difficulty-select">
+                <option value="easy">Fácil</option>
+                <option value="medium" selected>Médio</option>
+                <option value="hard">Difícil</option>
+              </select>
+            </div>
+            <button id="addTaskBtn" class="add-btn">
+              <i class="fas fa-plus"></i>
+              Adicionar
+            </button>
+          </div>
+        </div>
+
+        <div class="search-filters-section">
+          <div class="search-container">
+            <div class="search-input-group">
+              <i class="fas fa-search search-icon"></i>
+              <input
+                type="text"
+                id="searchInput"
+                placeholder="Pesquisar tarefas..."
+                class="search-input"
+              />
+              <button
+                id="clearSearchBtn"
+                class="clear-search-btn"
+                title="Limpar pesquisa"
+              >
+                <i class="fas fa-times"></i>
+              </button>
+            </div>
+          </div>
+
+          <div class="filters-container">
+            <button class="filters-toggle-btn" id="filtersToggleBtn">
+              <i class="fas fa-filter"></i>
+              Filtros
+              <i class="fas fa-chevron-down toggle-icon"></i>
+            </button>
+
+            <div class="filters" id="filtersSection">
+              <div class="filters-header">
+                <h3 class="filters-title">Filtros</h3>
+                <button class="close-filters-btn" id="closeFiltersBtn">
+                  <i class="fas fa-times"></i>
+                </button>
+              </div>
+
+              <div class="filter-group">
+                <h4 class="filter-title">Status</h4>
+                <div class="filter-buttons">
+                  <button class="filter-btn active" data-filter="all">
+                    <i class="fas fa-list"></i>
+                    Todas
+                  </button>
+                  <button class="filter-btn" data-filter="pending">
+                    <i class="fas fa-clock"></i>
+                    Pendentes
+                  </button>
+                  <button class="filter-btn" data-filter="completed">
+                    <i class="fas fa-check"></i>
+                    Concluídas
+                  </button>
+                </div>
+              </div>
+
+              <div class="filter-group">
+                <h4 class="filter-title">Dificuldade</h4>
+                <div class="filter-buttons">
+                  <button
+                    class="difficulty-filter-btn active"
+                    data-difficulty="all"
+                  >
+                    <i class="fas fa-th"></i>
+                    Todas
+                  </button>
+                  <button class="difficulty-filter-btn" data-difficulty="easy">
+                    <i class="fas fa-star"></i>
+                    Fácil
+                  </button>
+                  <button
+                    class="difficulty-filter-btn"
+                    data-difficulty="medium"
+                  >
+                    <i class="fas fa-star-half-alt"></i>
+                    Médio
+                  </button>
+                  <button class="difficulty-filter-btn" data-difficulty="hard">
+                    <i class="fas fa-fire"></i>
+                    Difícil
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="stats">
+          <div class="stat-item">
+            <span class="stat-number" id="totalTasks">0</span>
+            <span class="stat-label">Total</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-number" id="pendingTasks">0</span>
+            <span class="stat-label">Pendentes</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-number" id="completedTasks">0</span>
+            <span class="stat-label">Concluídas</span>
+          </div>
+        </div>
+
+        <div class="tasks-container">
+          <ul id="tasksList" class="tasks-list">
+            <!-- Tarefas serão inseridas aqui dinamicamente -->
+          </ul>
+        </div>
+
+        <div class="empty-state" id="emptyState">
+          <i class="fas fa-clipboard-list"></i>
+          <h3>Nenhuma tarefa ainda</h3>
+          <p>Adicione sua primeira tarefa para começar!</p>
+        </div>
+      </main>
+
+      <footer class="footer">
+        <button id="clearCompletedBtn" class="clear-btn">
+          <i class="fas fa-trash"></i>
+          Limpar Concluídas
+        </button>
+        <button id="clearAllBtn" class="clear-btn danger">
+          <i class="fas fa-trash-alt"></i>
+          Limpar Todas
+        </button>
+      </footer>
+    </div>
+
+    <!-- Modal para Limpar Tarefas Concluídas -->
+    <div id="clearCompletedModal" class="modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <div class="modal-icon">
+            <i class="fas fa-check-circle"></i>
+          </div>
+          <h3 class="modal-title">Limpar Tarefas Concluídas</h3>
+        </div>
+        <div class="modal-body">
+          <p>
+            Tem certeza que deseja remover todas as tarefas marcadas como
+            concluídas?
+          </p>
+          <div class="modal-stats">
+            <div class="modal-stat">
+              <i class="fas fa-check"></i>
+              <span id="completedCount">0</span>
+              <span>tarefa(s) concluída(s)</span>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="modal-btn cancel-btn" id="cancelClearCompleted">
+            <i class="fas fa-times"></i>
+            Cancelar
+          </button>
+          <button class="modal-btn confirm-btn" id="confirmClearCompleted">
+            <i class="fas fa-trash"></i>
+            Limpar Concluídas
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal para Limpar Todas as Tarefas -->
+    <div id="clearAllModal" class="modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <div class="modal-icon danger">
+            <i class="fas fa-exclamation-triangle"></i>
+          </div>
+          <h3 class="modal-title">Limpar Todas as Tarefas</h3>
+        </div>
+        <div class="modal-body">
+          <p>
+            <strong>Atenção!</strong> Esta ação irá remover TODAS as tarefas da
+            sua lista.
+          </p>
+          <p>
+            Esta operação não pode ser desfeita e todos os dados serão perdidos
+            permanentemente.
+          </p>
+          <div class="modal-stats">
+            <div class="modal-stat">
+              <i class="fas fa-tasks"></i>
+              <span id="totalCount">0</span>
+              <span>tarefa(s) no total</span>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="modal-btn cancel-btn" id="cancelClearAll">
+            <i class="fas fa-times"></i>
+            Cancelar
+          </button>
+          <button class="modal-btn confirm-btn danger" id="confirmClearAll">
+            <i class="fas fa-trash-alt"></i>
+            Limpar Todas
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Dropdown de Dificuldade -->
+    <div class="difficulty-dropdown" id="difficultyDropdown">
+      <div class="difficulty-dropdown-content">
+        <div class="difficulty-dropdown-header">
+          <h4>Alterar Dificuldade</h4>
+          <button class="close-difficulty-btn" id="closeDifficultyBtn">
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+        <div class="difficulty-dropdown-options">
+          <button class="difficulty-option" data-difficulty="easy">
+            <i class="fas fa-star"></i>
+            Fácil
+          </button>
+          <button class="difficulty-option" data-difficulty="medium">
+            <i class="fas fa-star-half-alt"></i>
+            Médio
+          </button>
+          <button class="difficulty-option" data-difficulty="hard">
+            <i class="fas fa-fire"></i>
+            Difícil
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Overlay para fechar modal ao clicar fora -->
+    <div class="modal-overlay"></div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
